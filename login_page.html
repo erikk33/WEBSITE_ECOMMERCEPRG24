@@ -1,46 +1,179 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Form Data</title>
+</head>
+<body>
+    <h1>Form Data</h1>
+    <form method="post" id="dataForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataForm').submit(function(event) {
+                event.preventDefault();
+                
+                var username = $('#username').val();
+                var password = $('#password').val();
+                
+                var url = 'https://645b8b38a8f9e4d6e76b7a16.mockapi.io/Acouunt';
+                var data = {
+                    username: username,
+                    password: password
+                };
+                
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: data,
+                    success: function(response) {
+                        console.log(response);
+                        // Handle success response here
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                        // Handle error response here
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+<!-- tampilkan status data input statis saja
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mock API Integration</title>
+    <title>Form Data</title>
 </head>
 <body>
-  <h1>Data from Mock API</h1>
-  <div id="data-container"></div>
+    <h1>Form Data</h1>
+    <form method="post" id="dataForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
 
-  <script>
-    const mockApiUrl = 'https://api.mockapi.io/mock-endpoint';
+    <div id="status"></div>
 
-    // Fungsi untuk mengambil data dari Mock API
-    function fetchDataFromMockApi() {
-      return fetch(mockApiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Manipulasi dan pengolahan data dari Mock API
-          // ...
-          return data;
-        })
-        .catch(error => {
-          console.error('Error fetching data from Mock API:', error);
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            var url = 'https://645b8b38a8f9e4d6e76b7a16.mockapi.io/Acouunt';
+            var data = {
+                username: username,
+                password: password
+            };
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 201) {
+                        document.getElementById('status').innerHTML = 'Data successfully submitted.';
+                    } else {
+                        document.getElementById('status').innerHTML = 'Failed to submit data.';
+                    }
+                }
+            };
+            
+            xhr.send(JSON.stringify(data));
         });
-    }
+    </script>
+</body>
+</html> -->
 
-    // Fungsi untuk memperbarui tampilan HTML dengan data dari Mock API
-    function updateDataView(data) {
-      const dataContainer = document.getElementById('data-container');
-      dataContainer.innerHTML = '';
 
-      data.forEach(item => {
-        const listItem = document.createElement('p');
-        listItem.textContent = `Name: ${item.name}, Age: ${item.age}`;
-        dataContainer.appendChild(listItem);
-      });
-    }
 
-    // Mengambil data dari Mock API dan memperbarui tampilan HTML
-    fetchDataFromMockApi()
-      .then(data => {
-        updateDataView(data);
-      });
-  </script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Form Data</h1>
+    <form method="post" id="dataForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="modal" id="statusModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalTitle">Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="statusModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            var url = 'https://645b8b38a8f9e4d6e76b7a16.mockapi.io/Acouunt';
+            var data = {
+                username: username,
+                password: password
+            };
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 201) {
+                        $('#statusModalTitle').text('Success');
+                        $('#statusModalBody').text('Data successfully submitted.');
+                        $('#statusModal').modal('show');
+                    } else {
+                        $('#statusModalTitle').text('Error');
+                        $('#statusModalBody').text('Failed to submit data.');
+                        $('#statusModal').modal('show');
+                    }
+                }
+            };
+            
+            xhr.send(JSON.stringify(data));
+        });
+    </script>
 </body>
 </html>
