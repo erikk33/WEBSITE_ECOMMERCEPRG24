@@ -7,7 +7,7 @@
          background-image: url('1314861.jpeg');
          background-size: cover;
       }
-      
+     
       .navbar {
          display: flex;
          justify-content: space-between;
@@ -15,45 +15,45 @@
          padding: 10px;
          background-color: rgba(0, 0, 0, 0.8);
       }
-      
+     
       .navbar-brand {
          font-size: 20px;
          color: #fff;
          margin-left: 20px;
       }
-      
+     
       .navbar-menu {
          list-style-type: none;
          margin-right: 20px;
       }
-      
+     
       .navbar-menu li {
          display: inline-block;
          margin-left: 10px;
       }
-      
+     
       .navbar-menu li a {
          color: #fff;
          text-decoration: none;
       }
-      
+     
       .container {
          max-width: 400px;
          margin: 0 auto;
          padding: 40px;
          background-color: rgba(255, 255, 255, 0.8);
       }
-      
+     
       h3 {
          text-align: center;
       }
-      
+     
       form {
          display: flex;
          flex-direction: column;
          align-items: center;
       }
-      
+     
       button.form-btn {
          font-family: 'Roboto', sans-serif;
          font-size: 14px;
@@ -66,15 +66,15 @@
          position: relative;
          overflow: hidden;
       }
-      
+     
       button.form-btn.sx {
          border-radius: 5px 0 0 5px;
       }
-      
+     
       button.form-btn.dx {
          border-radius: 0 5px 5px 0;
       }
-      
+     
       button.form-btn.back {
          position: absolute;
          top: 0;
@@ -84,11 +84,11 @@
          color: #fff;
          transition: all 0.3s linear;
       }
-      
+     
       button.form-btn.sx.back:hover {
          background-color: #654321;
       }
-      
+     
       input[type="text"],
       input[type="password"] {
          font-family: 'Roboto', sans-serif;
@@ -101,22 +101,22 @@
          margin-bottom: 15px;
          transition: all 0.3s linear;
       }
-      
+     
       input[type="text"]:hover,
       input[type="password"]:hover {
          border: 1px solid #87613d;
       }
-      
+     
       input[type="text"]:focus,
       input[type="password"]:focus {
          border: 1px solid #87613d;
          box-shadow: 0 0 5px rgba(135, 97, 61, 0.5);
       }
-      
+     
       .hidden {
          display: none;
       }
-      
+     
       .popup {
          position: fixed;
          top: 50%;
@@ -128,18 +128,18 @@
          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
          z-index: 9999;
       }
-      
+     
       .popup.hidden {
          display: none;
       }
-      
+     
       .popup .close {
          position: absolute;
          top: 10px;
          right: 10px;
          cursor: pointer;
       }
-      
+     
       /* Animasi Bubble */
       button.form-btn::before {
          content: "";
@@ -156,7 +156,7 @@
          transition: all 0.5s ease;
          animation: bubble 1.5s infinite;
       }
-      
+     
       @keyframes bubble {
          0% {
             width: 10px;
@@ -184,6 +184,7 @@
       </ul>
    </div>
 
+
    <div class="container">
       <form id="form">
          <h3>Login</h3>
@@ -191,6 +192,7 @@
          <input type="password" id="password" placeholder="Password" required>
          <button class="form-btn sx" onclick="submitForm(event)">Login</button>
          <button class="form-btn dx" onclick="showSignUp()">Sign Up</button>
+         <button class="form-btn dx" onclick="showForgotPassword()">Forgot Password</button>
       </form>
       <form id="signup-form" class="hidden">
          <h3>Sign Up</h3>
@@ -199,11 +201,18 @@
          <button class="form-btn sx" onclick="submitSignUp(event)">Submit</button>
          <button class="form-btn dx" onclick="showLogin()">Login</button>
       </form>
+      <form id="forgot-password-form" class="hidden">
+         <h3>Forgot Password</h3>
+         <input type="text" id="phone-number" placeholder="Phone Number" required>
+         <button class="form-btn sx" onclick="submitForgotPassword(event)">Submit</button>
+         <button class="form-btn dx" onclick="showLogin()">Login</button>
+      </form>
       <div id="popup" class="popup hidden">
          <span class="close" onclick="closePopup()">&times;</span>
-         <p id="popup-message"></p>
+         <pid="popup-message"></p>
       </div>
    </div>
+
 
    <script>
       function showSignUp() {
@@ -211,11 +220,18 @@
          document.getElementById("signup-form").classList.remove("hidden");
       }
 
+
       function showLogin() {
          document.getElementById("signup-form").classList.add("hidden");
          document.getElementById("form").classList.remove("hidden");
+         document.getElementById("forgot-password-form").classList.add("hidden");
       }
-
+     
+      function showForgotPassword() {
+         document.getElementById("form").classList.add("hidden");
+         document.getElementById("forgot-password-form").classList.remove("hidden");
+      }
+     
       function submitForm(event) {
          event.preventDefault();
          const username = document.getElementById("username").value;
@@ -230,10 +246,11 @@
                      user.username === username && user.password === password
                );
 
+
                if (foundUser) {
-                  showPopup("Login succes nih silhkan belanja");
+                  showPopup("Login successful! Happy shopping.");
                } else {
-                  showPopup("login kamu gagal nih 😭");
+                  showPopup("Login failed. 😭");
                }
             })
             .catch((error) => {
@@ -241,7 +258,7 @@
                showPopup("An error occurred");
             });
       }
-
+     
       function submitSignUp(event) {
          event.preventDefault();
          const username = document.getElementById("signup-username").value;
@@ -271,12 +288,40 @@
             });
       }
 
+      function submitForgotPassword(event) {
+         event.preventDefault();
+         const phoneNumber = document.getElementById("phone-number").value;
+
+         // Kirim permintaan ke backend untuk mengirim informasi akun yang terkait nomor telepon
+         fetch("https://example.com/forgot_password", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               phone: phoneNumber,
+            }),
+         })
+            .then((response) => {
+               if (response.ok) {
+                  showPopup("Account information sent to your phone number");
+               } else {
+                  showPopup("Failed to send account information");
+               }
+            })
+            .catch((error) => {
+               console.error("Error:", error);
+               showPopup("An error occurred");
+            });
+      }
+
       function showPopup(message) {
          const popup = document.getElementById("popup");
          const popupMessage = document.getElementById("popup-message");
          popupMessage.textContent = message;
          popup.classList.remove("hidden");
       }
+
 
       function closePopup() {
          const popup = document.getElementById("popup");
