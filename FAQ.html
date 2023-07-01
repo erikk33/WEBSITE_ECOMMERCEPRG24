@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .faq {
+      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      font-weight: bold;
+      cursor: pointer;
+      color: #333;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .question:hover {
+      color: #e74c3c;
+    }
+
+    .answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      color: #555;
+    }
+
+    .question.active {
+      color: #e74c3c;
+    }
+
+    .question.active + .answer {
+      max-height: 500px;
+      transition: max-height 0.3s ease-in;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      var questions = document.getElementsByClassName("question");
+
+      for (var i = 0; i < questions.length; i++) {
+        questions[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var answer = this.nextElementSibling;
+          if (answer.style.maxHeight) {
+            answer.style.maxHeight = null;
+          } else {
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          }
+        });
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>FAQ - Tokped </h1>
+
+  <div class="faq">
+    <div class="question">Bagaimana cara melakukan pembelian?</div>
+    <div class="answer">Anda dapat melakukan pembelian dengan mengikuti langkah-langkah berikut:
+      <ol>
+        <li>Pilih produk yang ingin Anda beli dan tambahkan ke keranjang.</li>
+        <li>Periksa kembali item yang ada di keranjang Anda dan klik tombol Checkout atau Lanjut ke Pembayaran.</li>
+        <li>Isi informasi pengiriman yang diperlukan, seperti alamat pengiriman dan nomor telepon.</li>
+        <li>Pilih metode pembayaran yang diinginkan, seperti transfer bank atau pembayaran melalui layanan pembayaran online.</li>
+        <li>Konfirmasikan pesanan Anda dan lakukan pembayaran jika diperlukan.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="question">Apa keuntungan berbelanja di e-commerce?</div>
+    <div class="answer">Berbelanja di e-commerce memiliki beberapa keuntungan, antara lain:
+      <ul>
+        <li>Kemudahan akses: Anda dapat mengakses berbagai produk dan toko dari mana saja dan kapan saja.</li>
+        <li>Pilihan yang lebih banyak: Anda dapat menemukan berbagai produk dengan beragam pilihan brand, ukuran, warna, dan sebagainya.</li>
+        <li>Harga yang kompetitif: E-commerce sering kali menawarkan harga yang lebih kompetitif dibandingkan toko fisik.</li>
+        <li>Beberapa metode pembayaran: Anda dapat memilih metode pembayaran yang nyaman bagi Anda, seperti transfer bank, kartu kredit, atau e-wallet.</li>
+        <li>Pengiriman yang cepat: Banyak e-commerce yang menawarkan pengiriman cepat, bahkan dalam waktu 1-2 hari.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="question">Bagaimana cara mengembalikan atau menukar produk yang dibeli?</div>
+    <div class="answer">Setiap e-commerce memiliki kebijakan pengembalian atau penukaran yang berbeda-beda, tetapi umumnya langkah-langkahnya adalah sebagai berikut:
+      <ol>
+        <li>Hubungi layanan pelanggan e-commerce untuk meminta prosedur pengembalian atau penukaran.</li>
+        <li>Pastikan Anda memiliki bukti pembelian dan informasi yang diperlukan, seperti nomor pesanan atau detail produk.</li>
+        <li>Ikuti instruksi yang diberikan oleh e-commerce untuk mengirimkan produk yang ingin dikembalikan atau ditukar.</li>
+        <li>Tunggu konfirmasi dan proses pengembalian atau penukaran dari e-commerce.</li>
+      </ol>
+      Pastikan untuk membaca kebijakan pengembalian atau penukaran dari e-commerce yang Anda beli agar memahami persyaratan dan batas waktu yang berlaku.
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="question">Apakah aman untuk berbelanja di e-commerce?</div>
+    <div class="answer">Berbelanja di e-commerce dapat aman jika Anda mengambil langkah-langkah pencegahan yang tepat, seperti:
+      <ul>
+        <li>Membeli dari toko online yang terpercaya dan terkenal.</li>
+        <li>Memeriksa kebijakan keamanan dan privasi dari e-commerce tersebut.</li>
+        <li>Menggunakan metode pembayaran yang aman dan terpercaya.</li>
+        <li>Memeriksa apakah alamat website menggunakan protokol HTTPS.</li>
+        <li>Menjaga keamanan akun dengan menggunakan password yang kuat dan tidak membagikan informasi pribadi dengan orang lain.</li>
+      </ul>
+      Selalu berhati-hati saat berbelanja online dan pastikan untuk mengikuti tautan yang aman dan menghindari tautan yang mencurigakan.
+    </div>
+  </div>
+</body>
+</html>
+
