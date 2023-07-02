@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,19 +49,102 @@
       color: #e74c3c;
     }
 
-    .question.active + .answer {
+    .question.active+.answer {
       max-height: 500px;
       transition: max-height 0.3s ease-in;
     }
-  </style>
-  <script>
-    window.onload = function() {
-      var questions = document.getElementsByClassName("question");
 
-      for (var i = 0; i < questions.length; i++) {
-        questions[i].addEventListener("click", function() {
+    .chat-bubble-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .chat-bubble {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      background-color: #007bff;
+      color: #ffffff;
+      font-size: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-box {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      display: none;
+      z-index: 9999;
+    }
+
+    .chat-box-header {
+      padding: 10px;
+      background-color: #007bff;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .chat-box-body {
+      padding: 10px;
+      height: 200px;
+      overflow-y: scroll;
+    }
+
+    .chat-box-footer {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: none;
+      border-radius: 3px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    .chat-send {
+      border: none;
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .chat-message {
+      margin-bottom: 10px;
+    }
+
+    .sender {
+      font-weight: bold;
+    }
+
+    .message {
+      margin-top: 5px;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/your-font-awesome-key.js" crossorigin="anonymous"></script>
+  <script>
+    window.onload = function () {
+      const questions = document.getElementsByClassName("question");
+
+      for (let i = 0; i < questions.length; i++) {
+        questions[i].addEventListener("click", function () {
           this.classList.toggle("active");
-          var answer = this.nextElementSibling;
+          const answer = this.nextElementSibling;
           if (answer.style.maxHeight) {
             answer.style.maxHeight = null;
           } else {
@@ -68,11 +152,51 @@
           }
         });
       }
+
+      const chatBubble = document.querySelector(".chat-bubble");
+      const chatBox = document.querySelector(".chat-box");
+      const chatInput = document.querySelector(".chat-input");
+      const chatSend = document.querySelector(".chat-send");
+      const chatBoxBody = document.querySelector(".chat-box-body");
+
+      chatBubble.addEventListener("click", function () {
+        chatBox.style.display = "block";
+      });
+
+      chatSend.addEventListener("click", function () {
+        const message = chatInput.value.trim();
+        if (message !== "") {
+          addChatMessage("User", message);
+          chatInput.value = "";
+        }
+      });
+
+      function addChatMessage(sender, message) {
+        const chatMessage = document.createElement("div");
+        chatMessage.classList.add("chat-message");
+
+        const senderElement = document.createElement("div");
+        senderElement.classList.add("sender");
+        senderElement.textContent = sender + ":";
+
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.textContent = message;
+
+        chatMessage.appendChild(senderElement);
+        chatMessage.appendChild(messageElement);
+
+        chatBoxBody.appendChild(chatMessage);
+
+        // Scroll to the bottom of the chat box
+        chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
+      }
     };
   </script>
 </head>
+
 <body>
-  <h1>FAQ - Tokped </h1>
+  <h1>FAQ - Tokped</h1>
 
   <div class="faq">
     <div class="question">Bagaimana cara melakukan pembelian?</div>
@@ -126,6 +250,21 @@
       Selalu berhati-hati saat berbelanja online dan pastikan untuk mengikuti tautan yang aman dan menghindari tautan yang mencurigakan.
     </div>
   </div>
-</body>
-</html>
 
+  <div class="chat-bubble-container">
+    <div class="chat-bubble">
+      <img src="https://img.icons8.com/dusk/64/000000/chat.png" alt="Chat Icon">
+    </div>
+  </div>
+
+  <div class="chat-box">
+    <div class="chat-box-header">Chat</div>
+    <div class="chat-box-body"></div>
+    <div class="chat-box-footer">
+      <input type="text" class="chat-input" placeholder="Type your message...">
+      <button class="chat-send">Send</button>
+    </div>
+  </div>
+</body>
+
+</html>
