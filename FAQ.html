@@ -49,7 +49,7 @@
       color: #e74c3c;
     }
 
-    .question.active+.answer {
+    .question.active + .answer {
       max-height: 500px;
       transition: max-height 0.3s ease-in;
     }
@@ -59,6 +59,7 @@
       bottom: 20px;
       right: 20px;
       z-index: 9999;
+      animation: floatBubble 2s infinite ease-in-out;
     }
 
     .chat-bubble {
@@ -73,6 +74,19 @@
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      animation: floatBubble 2s infinite ease-in-out;
+    }
+
+    @keyframes floatBubble {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
     }
 
     .chat-box {
@@ -89,10 +103,14 @@
     }
 
     .chat-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 10px;
       background-color: #007bff;
       color: #ffffff;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .chat-box-body {
@@ -135,9 +153,15 @@
     .message {
       margin-top: 5px;
     }
+
+    .hide {
+      display: none;
+    }
   </style>
-  <script src="https://kit.fontawesome.com/your-font-awesome-key.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+
   <script>
+    
     window.onload = function () {
       const questions = document.getElementsByClassName("question");
 
@@ -158,9 +182,16 @@
       const chatInput = document.querySelector(".chat-input");
       const chatSend = document.querySelector(".chat-send");
       const chatBoxBody = document.querySelector(".chat-box-body");
+      const chatBoxHeader = document.querySelector(".chat-box-header");
 
       chatBubble.addEventListener("click", function () {
         chatBox.style.display = "block";
+        chatBubble.classList.add("hide");
+      });
+
+      chatBoxHeader.addEventListener("click", function () {
+        chatBox.style.display = "none";
+        chatBubble.classList.remove("hide");
       });
 
       chatSend.addEventListener("click", function () {
@@ -205,7 +236,8 @@
         <li>Pilih produk yang ingin Anda beli dan tambahkan ke keranjang.</li>
         <li>Periksa kembali item yang ada di keranjang Anda dan klik tombol Checkout atau Lanjut ke Pembayaran.</li>
         <li>Isi informasi pengiriman yang diperlukan, seperti alamat pengiriman dan nomor telepon.</li>
-        <li>Pilih metode pembayaran yang diinginkan, seperti transfer bank atau pembayaran melalui layanan pembayaran online.</li>
+        <li>Pilih metode pembayaran yang diinginkan, seperti transfer bank atau pembayaran melalui layanan pembayaran
+          online.</li>
         <li>Konfirmasikan pesanan Anda dan lakukan pembayaran jika diperlukan.</li>
       </ol>
     </div>
@@ -216,9 +248,12 @@
     <div class="answer">Berbelanja di e-commerce memiliki beberapa keuntungan, antara lain:
       <ul>
         <li>Kemudahan akses: Anda dapat mengakses berbagai produk dan toko dari mana saja dan kapan saja.</li>
-        <li>Pilihan yang lebih banyak: Anda dapat menemukan berbagai produk dengan beragam pilihan brand, ukuran, warna, dan sebagainya.</li>
-        <li>Harga yang kompetitif: E-commerce sering kali menawarkan harga yang lebih kompetitif dibandingkan toko fisik.</li>
-        <li>Beberapa metode pembayaran: Anda dapat memilih metode pembayaran yang nyaman bagi Anda, seperti transfer bank, kartu kredit, atau e-wallet.</li>
+        <li>Pilihan yang lebih banyak: Anda dapat menemukan berbagai produk dengan beragam pilihan brand, ukuran, warna,
+          dan sebagainya.</li>
+        <li>Harga yang kompetitif: E-commerce sering kali menawarkan harga yang lebih kompetitif dibandingkan toko
+          fisik.</li>
+        <li>Beberapa metode pembayaran: Anda dapat memilih metode pembayaran yang nyaman bagi Anda, seperti transfer
+          bank, kartu kredit, atau e-wallet.</li>
         <li>Pengiriman yang cepat: Banyak e-commerce yang menawarkan pengiriman cepat, bahkan dalam waktu 1-2 hari.</li>
       </ul>
     </div>
@@ -226,40 +261,56 @@
 
   <div class="faq">
     <div class="question">Bagaimana cara mengembalikan atau menukar produk yang dibeli?</div>
-    <div class="answer">Setiap e-commerce memiliki kebijakan pengembalian atau penukaran yang berbeda-beda, tetapi umumnya langkah-langkahnya adalah sebagai berikut:
+    <div class="answer">Setiap e-commerce memiliki kebijakan pengembalian atau penukaran yang berbeda-beda, tetapi
+      umumnya langkah-langkahnya adalah sebagai berikut:
       <ol>
         <li>Hubungi layanan pelanggan e-commerce untuk meminta prosedur pengembalian atau penukaran.</li>
-        <li>Pastikan Anda memiliki bukti pembelian dan informasi yang diperlukan, seperti nomor pesanan atau detail produk.</li>
-        <li>Ikuti instruksi yang diberikan oleh e-commerce untuk mengirimkan produk yang ingin dikembalikan atau ditukar.</li>
+        <li>Pastikan Anda memiliki bukti pembelian dan informasi yang diperlukan, seperti nomor pesanan atau detail
+          produk.</li>
+        <li>Ikuti instruksi yang diberikan oleh e-commerce untuk mengirimkan produk yang ingin dikembalikan atau ditukar.
+        </li>
         <li>Tunggu konfirmasi dan proses pengembalian atau penukaran dari e-commerce.</li>
       </ol>
-      Pastikan untuk membaca kebijakan pengembalian atau penukaran dari e-commerce yang Anda beli agar memahami persyaratan dan batas waktu yang berlaku.
+      Pastikan untuk membaca kebijakan pengembalian atau penukaran dari e-commerce yang Anda beli agar memahami persyaratan
+      dan batas waktu yang berlaku.
     </div>
   </div>
 
   <div class="faq">
     <div class="question">Apakah aman untuk berbelanja di e-commerce?</div>
-    <div class="answer">Berbelanja di e-commerce dapat aman jika Anda mengambil langkah-langkah pencegahan yang tepat, seperti:
+    <div class="answer">Berbelanja di e-commerce dapat aman jika Anda mengambil langkah-langkah pencegahan yang tepat,
+      seperti:
       <ul>
         <li>Membeli dari toko online yang terpercaya dan terkenal.</li>
         <li>Memeriksa kebijakan keamanan dan privasi dari e-commerce tersebut.</li>
         <li>Menggunakan metode pembayaran yang aman dan terpercaya.</li>
         <li>Memeriksa apakah alamat website menggunakan protokol HTTPS.</li>
-        <li>Menjaga keamanan akun dengan menggunakan password yang kuat dan tidak membagikan informasi pribadi dengan orang lain.</li>
+        <li>Menjaga keamanan akun dengan menggunakan password yang kuat dan tidak membagikan informasi pribadi dengan
+          orang lain.</li>
       </ul>
-      Selalu berhati-hati saat berbelanja online dan pastikan untuk mengikuti tautan yang aman dan menghindari tautan yang mencurigakan.
+      Selalu berhati-hati saat berbelanja online dan pastikan untuk mengikuti tautan yang aman serta menghindari penawaran
+      yang terlalu bagus untuk menjadi kenyataan.
     </div>
   </div>
 
   <div class="chat-bubble-container">
     <div class="chat-bubble">
-      <img src="https://img.icons8.com/dusk/64/000000/chat.png" alt="Chat Icon">
+      <img src="images/pngwing.com.png"  style="width: 24px; height: 24px;" alt="Chat Logo">
+      <i class="fas fa-comment"></i>
     </div>
   </div>
 
   <div class="chat-box">
-    <div class="chat-box-header">Chat</div>
-    <div class="chat-box-body"></div>
+    <div class="chat-box-header">
+      <span>Chat with us</span>
+      <i class="fas fa-times"></i>
+    </div>
+    <div class="chat-box-body">
+      <div class="chat-message">
+        <div class="sender">Assistant:</div>
+        <div class="message">Hi! How can I assist you today?</div>
+      </div>
+    </div>
     <div class="chat-box-footer">
       <input type="text" class="chat-input" placeholder="Type your message...">
       <button class="chat-send">Send</button>
