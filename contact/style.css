@@ -1,3 +1,39 @@
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+}
+
+.popup-icon {
+  margin-right: 10px;
+}
+
+.popup-message {
+  margin: 0;
+}
+
+.success {
+  background-color: rgba(76, 175, 80, 0.8);
+}
+
+.error {
+  background-color: rgba(244, 67, 54, 0.8);
+}
+
+
+
 * {
   margin: 0;
   padding: 0;
