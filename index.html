@@ -13,19 +13,17 @@
     body {
       background-image: url('index_htmlbackground.png');
       background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
     }
 
     .navbar {
-      background-color: #f8f9fa;
+      background-color: #da373d;
       padding: 10px;
     }
 
     .navbar-brand {
       font-size: 24px;
       font-weight: bold;
-      color: #000;
+      color: #fff;
     }
 
     .navbar-brand img {
@@ -59,12 +57,12 @@
 
     .nav-item a {
       font-size: 16px;
-      color: #000;
+      color: #fff;
       transition: color 0.3s ease;
     }
 
     .nav-item a:hover {
-      color: #da373d;
+      color: #f8f9fa;
     }
 
     .form-control {
@@ -98,17 +96,6 @@
       .form-control {
         display: none;
       }
-    }
-
-    /* Tambahkan style untuk etalase barang */
-    .product {
-      text-align: center;
-    }
-
-    .product img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 10px;
     }
 
     /* Tambahkan style untuk keranjang belanja */
@@ -145,11 +132,78 @@
     .cart-item i {
       cursor: pointer;
     }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #da373d;
+      font-size: 32px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      color: #da373d;
+    }
+
+    .navbar-toggler:focus {
+      outline: none;
+    }
+
+    .ripple {
+      position: relative;
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .ripple:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #ffffff 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 1s;
+    }
+
+    .ripple:active:after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
   </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <a class="navbar-brand" href="#">
         <img src="3674517.jpg" alt="Logo" />
@@ -157,33 +211,30 @@
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon ripple" onclick="rippleEffect(event)"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active ripple" aria-current="page" href="#" onclick="rippleEffect(event)">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact/contact.html">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="FAQ.html">FAQ</a>
+            <a class="nav-link ripple" href="contact/contact.html" onclick="rippleEffect(event)">contact</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
+            <a class="nav-link dropdown-toggle ripple" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" onclick="rippleEffect(event)">
               Dropdown
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Action</a></li>
+              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Something else here</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="login_page.html">Login</a>
+            <a class="nav-link active ripple" href="login_page.html" onclick="rippleEffect(event)">Login</a>
           </li>
         </ul>
       </div>
@@ -194,22 +245,22 @@
     <div class="grid grid-cols-3 gap-4">
       <!-- Etalase barang -->
       <div class="col-span-2">
-        <h2>Etalase Barang</h2>
+        <h2 class="text-center text-xl font-bold">Etalase Barang</h2>
         <!-- Daftar barang menggunakan swiper -->
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <div class="product">
+              <div class="product mx-auto w-4/5">
                 <img src="sony-xperia-5-iii-front-in-hand-8683752c7001d29dfbc8f3b81a46bc3a_600x400.jpg" alt="Barang 1">
-                <h4>Barang 1</h4>
+                <h4 class="font-bold">Barang 1</h4>
                 <p>Harga: RP1.000.000</p>
                 <button class="btn btn-primary" onclick="addToCart('Barang 1', 1000000)">Tambahkan ke Keranjang</button>
               </div>
             </div>
             <div class="swiper-slide">
-              <div class="product">
+              <div class="product mx-auto w-4/5">
                 <img src="Sony-Xperia-XZ1.jpg" alt="Barang 2">
-                <h4>Barang 2</h4>
+                <h4 class="font-bold">Barang 2</h4>
                 <p>Harga: RP2.000.000</p>
                 <button class="btn btn-primary" onclick="addToCart('Barang 2', 2000000)">Tambahkan ke
                   Keranjang</button>
@@ -218,19 +269,20 @@
             <!-- Tambahkan produk lainnya di sini -->
           </div>
           <div class="swiper-pagination"></div>
+          <div class="swiper-button-next swiper-button-white"></div>
+          <div class="swiper-button-prev swiper-button-white"></div>
         </div>
       </div>
       <!-- Keranjang belanja -->
-      <div class="cart">
+      <div class="cart hide">
         <h3 class="cart-title">
           <img src="—Pngtree—fast shopping cart icon design_5537563.png" alt="Logo"
-            style="width: 80px; height: 90px;">
+            style="width: 20px; height: 20px;">
         </h3>
         <ul id="cart-items"></ul>
       </div>
     </div>
   </div>
-
 
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <script>
@@ -241,6 +293,10 @@
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
     });
 
@@ -277,7 +333,14 @@
       });
 
       if (cartItems.length === 0) {
-        cartItemsElement.innerHTML = '<li>Belum ada barang di keranjang</li>';
+        cartItemsElement.innerHTML = '<li id="empty-cart-msg">Belum ada barang di keranjang</li>';
+        setTimeout(() => {
+          const emptyCartMsg = document.getElementById('empty-cart-msg');
+          emptyCartMsg.style.animation = 'fadeOut 1s forwards';
+          setTimeout(() => {
+            emptyCartMsg.style.display = 'none';
+          }, 1000);
+        }, 0);
       }
 
       // Tampilkan total harga
@@ -285,6 +348,29 @@
       totalPriceElement.className = 'cart-item';
       totalPriceElement.innerHTML = `<span>Total: RP${totalPrice.toLocaleString()}</span>`;
       cartItemsElement.appendChild(totalPriceElement);
+
+      // Tampilkan keranjang belanja
+      const cart = document.querySelector('.cart');
+      if (cartItems.length > 0) {
+        cart.classList.remove('hide');
+      } else {
+        cart.classList.add('hide');
+      }
+    }
+
+    function rippleEffect(event) {
+      const target = event.currentTarget;
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      const diameter = Math.max(target.clientWidth, target.clientHeight);
+      const radius = diameter / 2;
+      ripple.style.width = ripple.style.height = `${diameter}px`;
+      ripple.style.left = `${event.clientX - target.getBoundingClientRect().left - radius}px`;
+      ripple.style.top = `${event.clientY - target.getBoundingClientRect().top - radius}px`;
+      target.appendChild(ripple);
+      setTimeout(() => {
+        ripple.remove();
+      }, 3000);
     }
   </script>
 </body>
