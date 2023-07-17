@@ -183,14 +183,6 @@
          <li><a href='index.html'>Home</a></li>
       </ul>
    </div>
-
-
-
-
-
-
-
-
    <div class="container">
       <form id="form">
          <h3>Login</h3>
@@ -218,21 +210,12 @@
          <p id="popup-message"></p>
       </div>
    </div>
-
-
-
-
-
-
-
-
    <script>
       function showSignUp() {
          document.getElementById("form").classList.add("hidden");
          document.getElementById("signup-form").classList.remove("hidden");
       }
-
-
+     
       function showLogin() {
          document.getElementById("signup-form").classList.add("hidden");
          document.getElementById("form").classList.remove("hidden");
@@ -249,7 +232,6 @@
          const username = document.getElementById("username").value;
          const password = document.getElementById("password").value;
 
-
          // Kirim permintaan ke backend mock API
          fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up")
             .then((response) => response.json())
@@ -259,11 +241,10 @@
                      user.username === username && user.password === password
                );
 
-
                if (foundUser) {
-                  showPopup("Login successful! -) ☺");
+                  window.location.href = "index.html"; // Redirect ke halaman index.html
                } else {
-                  showPopup("Login failed. 😭");
+                  showPopup("Login gagal username & password ada yang salah. 😭");
                }
             })
             .catch((error) => {
@@ -276,7 +257,6 @@
          event.preventDefault();
          const username = document.getElementById("signup-username").value;
          const password = document.getElementById("signup-password").value;
-
 
          // Kirim permintaan ke backend mock API
          fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up", {
@@ -301,12 +281,10 @@
                showPopup("An error occurred");
             });
       }
-
-
+     
       function submitForgotPassword(event) {
          event.preventDefault();
          const phoneNumber = document.getElementById("phone-number").value;
-
 
          // Kirim permintaan ke backend untuk mengirim informasi akun yang terkait nomor telepon
          fetch("https://example.com/forgot_password", {
@@ -330,16 +308,14 @@
                showPopup("An error occurred");
             });
       }
-
-
+     
       function showPopup(message) {
          const popup = document.getElementById("popup");
          const popupMessage = document.getElementById("popup-message");
          popupMessage.textContent = message;
          popup.classList.remove("hidden");
       }
-
-
+     
       function closePopup() {
          const popup = document.getElementById("popup");
          popup.classList.add("hidden");
@@ -347,6 +323,3 @@
    </script>
 </body>
 </html>
-
-
-
