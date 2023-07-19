@@ -28,9 +28,11 @@
       0% {
         transform: scale(0);
       }
+
       70% {
         transform: scale(1.2);
       }
+
       100% {
         transform: scale(1);
       }
@@ -49,12 +51,70 @@
       0% {
         transform: translateX(-50%);
       }
+
       50% {
         transform: translateX(50%);
       }
+
       100% {
         transform: translateX(-50%);
       }
+    }
+
+    /* CSS untuk fireworks */
+    @keyframes explode {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    .fireworks {
+      position: fixed;
+      background-color: #ff4d4d;
+      border-radius: 50%;
+      animation: explode 1s;
+      pointer-events: none;
+    }
+
+    /* CSS untuk simbol surat animasi */
+    @keyframes send-mail {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translateY(-30px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+    }
+
+    .send-mail {
+      font-size: 32px;
+      color: #ff4d4d;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      animation: send-mail 2s;
+      pointer-events: none;
+    }
+
+    .send-mail.success {
+      color: #00cc66; /* Warna hijau */
     }
   </style>
 </head>
@@ -127,8 +187,9 @@
                         <div class="form-submit-row-main">
                           <div class="form-submit-row-bar">
                             <div class="form-submit-row-control">
-                              <button type="submit" class="button-primary button">
+                              <button type="submit" class="button-primary button" onclick="handleFireworks(event)">
                                 <span class="button-text">Kirim</span>
+                                <i class="fas fa-envelope send-mail"></i>
                               </button>
                             </div>
                           </div>
@@ -150,6 +211,7 @@
 
   <script>
     const contactForm = document.getElementById('contactForm');
+    const sendMailIcon = document.querySelector('.send-mail');
 
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -182,11 +244,17 @@
             text: 'Data Anda telah berhasil dikirim ke Mock API.',
             icon: 'success',
             showConfirmButton: false,
-            timer: 3000,
+            timer: 4000,
             onAfterClose: () => {
               contactForm.reset();
             }
           });
+
+          // Mengubah warna simbol surat menjadi hijau selama 4 detik
+          sendMailIcon.classList.add('success');
+          setTimeout(() => {
+            sendMailIcon.classList.remove('success');
+          }, 4000);
         })
         .catch(error => {
           console.error(error);
@@ -199,6 +267,28 @@
           });
         });
     });
+
+    function handleFireworks(event) {
+      // Mendapatkan posisi klik tombol Kirim
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // Membuat element div untuk efek fireworks
+      const fireworks = document.createElement('div');
+      fireworks.className = 'fireworks';
+
+      // Menambahkan element ke dalam body
+      document.body.appendChild(fireworks);
+
+      // Mengatur posisi fireworks sesuai dengan klik tombol Kirim
+      fireworks.style.left = x - 150 + 'px';
+      fireworks.style.top = y - 150 + 'px';
+
+      // Menghapus element fireworks setelah 3 detik (delay)
+      setTimeout(() => {
+        document.body.removeChild(fireworks);
+      }, 3000);
+    }
   </script>
 </body>
 
