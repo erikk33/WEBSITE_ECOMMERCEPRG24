@@ -116,6 +116,36 @@
     .send-mail.success {
       color: #00cc66; /* Warna hijau */
     }
+
+    /* CSS untuk animasi typewriter */
+    .typewriter {
+      overflow: hidden; /* Menyembunyikan teks yang melebihi area container */
+      border-right: 0.15em solid #00cc66; /* Garis tepi untuk efek pengetikan */
+      white-space: nowrap; /* Teks tetap dalam satu baris */
+      letter-spacing: 0.15em; /* Jarak antar huruf */
+      animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    /* Animasi pengetikan */
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    /* Animasi caret (kursor) berkedip */
+    @keyframes blink-caret {
+      from,
+      to {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #00cc66;
+      }
+    }
   </style>
 </head>
 
@@ -206,12 +236,17 @@
     </div>
   </div>
 
+  <div id="ipInfo" style="text-align: center; margin-top: 20px; font-size: 16px;">
+    Alamat IP Anda: <span id="ipAddress" class="typewriter"></span>
+  </div>
+
   <!-- SweetAlert2 library -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 
   <script>
     const contactForm = document.getElementById('contactForm');
     const sendMailIcon = document.querySelector('.send-mail');
+    const ipInfoElement = document.getElementById('ipAddress');
 
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -289,6 +324,41 @@
         document.body.removeChild(fireworks);
       }, 3000);
     }
+
+    // Function untuk mendapatkan alamat IP dari layanan "ipapi.co"
+    function getIPAddress() {
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const ipAddress = data.ip;
+          // Animasi penulisan teks alamat IP
+          typewriterEffect(ipAddress, ipInfoElement);
+        })
+        .catch(error => {
+          console.error('Gagal mendapatkan alamat IP:', error);
+        });
+    }
+
+    // Function untuk membuat efek penulisan teks
+    function typewriterEffect(text, element) {
+      let charIndex = 0;
+      const typingInterval = 100; // Kecepatan penulisan (ms)
+      const textLength = text.length;
+
+      const typingTimer = setInterval(() => {
+        if (charIndex < textLength) {
+          // Tambahkan satu karakter ke teks yang sedang ditulis
+          element.textContent += text.charAt(charIndex);
+          charIndex++;
+        } else {
+          // Hentikan interval ketika teks sudah ditulis semua
+          clearInterval(typingTimer);
+        }
+      }, typingInterval);
+    }
+
+    // Panggil function untuk mendapatkan alamat IP saat halaman dimuat
+    window.addEventListener('load', getIPAddress);
   </script>
 </body>
 
