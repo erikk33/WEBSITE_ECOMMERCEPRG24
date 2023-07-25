@@ -1,0 +1,93 @@
+.icon{
+    margin: 65px 10px 10px 10px;
+}
+.icon a{
+    text-decoration: none;
+}
+i a{
+    margin: 0px 0px 0px 5px;
+}
+.img-slide{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 4%;
+}
+.image-slider{
+    position: relative;
+    width: 640px;
+    height: 426px;
+    z-index: 10;
+    margin-left: 20px;
+}
+.slide{
+    width: 100%;
+    position: absolute;
+    clip-path: circle(0% at 0 50%);
+}
+.slide img{
+    width: 66%;
+    border-radius: 15px;
+    box-shadow: 0 0 20px black;
+}
+.navigation{
+    position: absolute;
+    display: flex;
+    bottom: 30px;
+    left: 20%;
+    transform: translateX(50%);
+}
+.slider-btn{
+    background-color: rgb(151, 151, 151);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 5px;
+}
+.slide.active{
+    clip-path: circle(150% at 0 50%);
+    transition: 1s;
+    transition-property: clip-path;
+}
+.slider-btn.active{
+    background-color: rgb(38, 70, 83);
+}
+
+
+.description{
+    display: block;
+    /* margin: 0 auto; */
+    max-width: 60%;
+}
+.item-name{
+    text-decoration: solid;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.item-desc{
+    font-size: large;
+}
+.price{
+    font-size: 20px;
+}
+
+/* button */
+.checkout{
+    background-color: rgb(193, 187, 187);
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 7px;
+}
+.checkout a{
+    text-decoration: none;
+    color: black;
+}
+.checkout:hover{
+    cursor: pointer;
+    background-color: rgb(175, 170, 170);
+}
+.checkout:active{
+    transform: translateY(3px);
+    box-shadow: 0px 0px 10px rgb(72, 72, 72);
+}

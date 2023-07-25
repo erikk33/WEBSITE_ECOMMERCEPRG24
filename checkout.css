@@ -1,0 +1,40 @@
+.icon{
+    margin: 65px 10px 10px 10px;
+}
+.icon a{
+    text-decoration: none;
+}
+i a{
+    margin: 0px 0px 0px 5px;
+}
+
+.item-container{
+    margin: 10% 0 0 20%;
+    width: 50%;
+    background-color: #cdd2cf;
+    display: block;
+    /* justify-content: center; */
+}
+.Abt-me-container{
+    /* border-top: solid 10px #49A078; */
+    /* border-width: 30px; */
+    padding: 5px 10px 10px 10px;
+    margin: 10px;
+    /* display: flex; */
+}
+.line{
+    width: 60%;
+    border-top: solid 10px #8d928f;
+}
+.btn{
+    background-color: transparent;
+    border-style: none;
+    font-size: 20px;
+    transition: 0.3s;
+}
+button:hover{
+    cursor: pointer;
+}
+button:active{
+    transform: translateY(3px);
+}
