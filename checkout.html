@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-<style>
-  /* Sesuaikan style tambahan di sini */
-  body {
-    background-image: url('index_htmlbackground.png');
-    background-size: cover;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <style>
+    /* Your additional styles here */
+    body {
+      background-color: white;
+    }
 
-  /* ... Kode CSS yang lain tetap sama ... */
-</style>
+    /* ... Other CSS code ... */
+  </style>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light">
-    <!-- ... Kode Navbar tetap sama ... -->
+    <!-- ... Your Navbar code ... -->
   </nav>
 
   <div class="container mx-auto mt-5">
     <div class="grid grid-cols-3 gap-4">
-      <!-- Etalase barang -->
+      <!-- Product showcase -->
       <div class="col-span-2">
-        <!-- ... Kode Etalase barang tetap sama ... -->
+        <!-- ... Your Product showcase code ... -->
       </div>
-      <!-- Keranjang belanja -->
+      <!-- Shopping cart -->
       <div class="cart hide">
         <h3 class="cart-title">
           <img src="—Pngtree—fast shopping cart icon design_5537563.png" alt="Logo" style="width: 20px; height: 20px;">
@@ -40,50 +38,53 @@
         <div class="total-price">
           <span>Total Harga: <span id="totalPrice">RP0</span></span>
         </div>
+        <div class="payment-methods">
+          <h4>Pilih Metode Pembayaran:</h4>
+          <label><input type="checkbox" name="paymentMethod" value="dana"> Dana</label>
+          <label><input type="checkbox" name="paymentMethod" value="shopee"> Shopee Pay</label>
+          <label><input type="checkbox" name="paymentMethod" value="gopay"> GoPay</label>
+          <label><input type="checkbox" name="paymentMethod" value="transfer"> Transfer ke Bank Indonesia</label>
+        </div>
         <button class="btn btn-primary btn-block" onclick="checkout()">Checkout</button>
       </div>
     </div>
   </div>
 
-  <!-- ... Kode Loading Screen tetap sama ... -->
+  <!-- ... Your Loading Screen code ... -->
 
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <script>
-    // Inisialisasi Swiper
-    const swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
+    // Your Swiper initialization and other JavaScript functions
 
-    // Keranjang belanja
-    const cartItems = [];
+    // Function to fetch cart data from the API
+    async function fetchCartData() {
+      const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
+      try {
+        const response = await fetch(apiUrl);
+        const cartItems = await response.json();
 
-    function addToCart(product, price) {
-      cartItems.push({
-        product,
-        price
-      });
-      renderCart();
+        // Calculate total price and display cart details
+        const totalPrice = calculateTotalPrice(cartItems);
+        displayCartDetails(cartItems, totalPrice);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    function removeFromCart(index) {
-      cartItems.splice(index, 1);
-      renderCart();
+    // Calculate total price of cart items
+    function calculateTotalPrice(cartItems) {
+      return cartItems.reduce((total, item) => total + item.price, 0);
     }
 
-    function renderCart() {
+    // Display cart details on the checkout page
+    function displayCartDetails(cartItems, totalPrice) {
       const cartItemsElement = document.getElementById('cart-items');
+      const totalPriceElement = document.getElementById('totalPrice');
+
+      // Clear previous cart items
       cartItemsElement.innerHTML = '';
 
-      let totalPrice = 0;
+      // Display each cart item
       cartItems.forEach((item, index) => {
         const li = document.createElement('li');
         li.className = 'cart-item';
@@ -92,25 +93,42 @@
           <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
         `;
         cartItemsElement.appendChild(li);
-        totalPrice += item.price;
       });
 
-      if (cartItems.length === 0) {
-        cartItemsElement.innerHTML = '<li id="empty-cart-msg">Belum ada barang di keranjang</li>';
-        setTimeout(() => {
-          const emptyCartMsg = document.getElementById('empty-cart-msg');
-          emptyCartMsg.style.animation = 'fadeOut 1s forwards';
-          setTimeout(() => {
-            emptyCartMsg.style.display = 'none';
-          }, 1000);
-        }, 0);
-      }
+      // Display total price
+      totalPriceElement.textContent = `Total Harga: RP${totalPrice.toLocaleString()}`;
+    }
 
-      // Tampilkan total harga
+    // Function to remove item from cart
+    function removeFromCart(index) {
+      cartItems.splice(index, 1);
+      renderCart();
+    }
+
+    // Function to render cart items and total price
+    function renderCart() {
+      const cartItemsElement = document.getElementById('cart-items');
       const totalPriceElement = document.getElementById('totalPrice');
-      totalPriceElement.textContent = `RP${totalPrice.toLocaleString()}`;
+      let totalPrice = calculateTotalPrice(cartItems);
 
-      // Tampilkan keranjang belanja
+      // Clear previous cart items
+      cartItemsElement.innerHTML = '';
+
+      // Display each cart item
+      cartItems.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <span>${item.product} - RP${item.price.toLocaleString()}</span>
+          <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
+        `;
+        cartItemsElement.appendChild(li);
+      });
+
+      // Display total price
+      totalPriceElement.textContent = `Total Harga: RP${totalPrice.toLocaleString()}`;
+
+      // Show/hide cart based on cartItems length
       const cart = document.querySelector('.cart');
       if (cartItems.length > 0) {
         cart.classList.remove('hide');
@@ -119,28 +137,33 @@
       }
     }
 
+    // Function to perform checkout
     function checkout() {
-      if (cartItems.length === 0) {
-        alert('Keranjang belanja kosong! Silakan tambahkan barang terlebih dahulu.');
+      const selectedPaymentMethods = document.querySelectorAll('input[name="paymentMethod"]:checked');
+      if (selectedPaymentMethods.length === 0) {
+        alert('Pilih setidaknya satu metode pembayaran.');
         return;
       }
 
-      // Lakukan proses checkout di sini
-      // Contoh: 
-      alert('Checkout berhasil! Total harga: RP' + getTotalPrice());
+      const paymentMethods = Array.from(selectedPaymentMethods).map(input => input.value);
+      const totalPrice = calculateTotalPrice(cartItems);
+
+      // Perform the checkout process here
+      const paymentInfo = `Metode Pembayaran: ${paymentMethods.join(', ')}\nTotal Harga: RP${totalPrice.toLocaleString()}`;
+      alert(`Checkout berhasil!\n\n${paymentInfo}`);
+
+      // Clear cartItems and re-render
       cartItems.length = 0;
       renderCart();
     }
 
-    function getTotalPrice() {
-      return cartItems.reduce((acc, item) => acc + item.price, 0);
-    }
+    // Fetch cart data and display on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchCartData();
+    });
 
-    function rippleEffect(event) {
-      // ... Kode Ripple Effect tetap sama ...
-    }
+    // Rest of your JavaScript code
   </script>
 </body>
-
 
 </html>
