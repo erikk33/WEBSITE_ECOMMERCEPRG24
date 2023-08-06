@@ -1,354 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="index.css">
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
-<title>Toped</title>
-<style>
-/* Tambahkan style untuk keranjang belanja */
-.cart {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
+  <title>Toped</title>
+  <style>
+    footer {
+  background-image: linear-gradient(rgb(245, 235, 220), rgb(245, 224, 192));
+  font-family: 'Alegreya Sans SC', sans-serif;
 }
-
-.cart-title {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.cart-title img {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.cart-item i {
-  cursor: pointer;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.swiper-container {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
+.main-footer { 
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  color: #da373d;
-  font-size: 32px;
-}
-
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  color: #da373d;
-}
-
-.navbar-toggler:focus {
-  outline: none;
-}
-
-.ripple {
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-}
-
-.ripple:after {
-  content: "";
-  display: block;
-  position: absolute;
   width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, #ffffff 10%, transparent 10.01%);
-  background-repeat: no-repeat;
-  background-position: 50%;
-  transform: scale(10, 10);
-  opacity: 0;
-  transition: transform 0.5s, opacity 1s;
 }
-
-.ripple:active:after {
-  transform: scale(0, 0);
-  opacity: 0.3;
-  transition: 0s;
+.center-footer {
+  margin-left: 20px;
+  margin-right: 20px;
 }
+    /* Your custom styles here */
+    body {
+      font-family: 'Roboto Flex', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+    }
 
-/* Tambahkan style untuk loading screen */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 1s;
-}
-
-.loading-image {
-  width: 200px;
-  height: auto;
-}
-
-/* Tambahkan style untuk loading screen */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 1s;
-}
-
-.loading-image {
-  width: 200px;
-  height: auto;
-}
-
-/* Tambahkan style untuk pemberitahuan checkout */
-.notification {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: #fff;
+    .hide {
   display: none;
-  z-index: 9999;
-  animation: bubblingFly 1s ease;
 }
 
-.notification.success {
-  background-color: #28a745;
-}
 
-.notification.error {
-  background-color: #dc3545;
-}
+    /* Tambahkan style untuk keranjang belanja */
+    .cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-@keyframes bubblingFly {
-  0% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-</style>
+    .cart-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .cart-title img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .cart-item i {
+      cursor: pointer;
+    }
+
+    /* Style untuk carousel gambar pada produk */
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #da373d;
+      font-size: 32px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      color: #da373d;
+    }
+
+    /* Style untuk tombol navigasi navbar pada smartphone */
+    .navbar-toggler:focus {
+      outline: none;
+    }
+
+    /* Style untuk animasi ripple saat tombol ditekan */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .ripple:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #ffffff 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 1s;
+    }
+
+    .ripple:active:after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    /* Style untuk loading screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 1s;
+    }
+
+    .loading-image {
+      width: 200px;
+      height: auto;
+    }
+
+    /* Style untuk pemberitahuan checkout */
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      color: #fff;
+      display: none;
+      z-index: 9999;
+      animation: bubblingFly 1s ease;
+    }
+
+    .notification.success {
+      background-color: #28a745;
+    }
+
+    .notification.error {
+      background-color: #dc3545;
+    }
+
+    @keyframes bubblingFly {
+      0% {
+        transform: scale(0.2);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Additional styles for responsive layout */
+    @media screen and (max-width: 768px) {
+      /* Adjustments for smaller screens */
+      .product.white {
+        width: 100%;
+      }
+
+      .product.white img {
+        width: 100%;
+      }
+
+      .cart {
+        bottom: 60px;
+      }
+
+      .cart-title img {
+        width: 16px;
+        height: 16px;
+      }
+
+      .main-footer {
+        display: block;
+        text-align: center;
+      }
+
+      .main-footer .left-footer,
+      .main-footer .right-footer,
+      .main-footer .payment {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .social-media {
+        flex-wrap: wrap;
+      }
+
+      .payment-img {
+        width: 50px;
+        height: 30px;
+        margin: 5px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-<div class="main-header">
-<h3 class="header-info">
-<a href="index.html">Toped <i class="fas fa-store"></i></a>
-</h3>
-<nav>
-<a href="faq">FAQ</a>
-<a href="contact/contact.html">Contact Us</a>
-<a href="login_page.html">Login</a>
-</nav>
-</div>
-</header>
+  <header>
+    <div class="main-header">
+      <h3 class="header-info">
+        <a href="index.html">Toped <i class="fas fa-store"></i></a>
+      </h3>
+      <nav>
+        <a href="FAQ.html">FAQ</a>
+        <a href="contact/contact.html">Contact Us</a>
+        <a href="login_page.html">Login</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="content">
+      <div class="product-container">
+        <h3 class="main-title">Lorem Ipsum</h3>
+        <div class="item-container">
+          <div class="product white">
+            <img src="assets/kemeja1.jpg" alt="" width="60%" height="auto" />
+            <h3><a href="product.html">Kemeja</a></h3>
+            <p id="product-description" class="product-description hide">
+              Deskripsi Produk: Kemeja Berwarna Biru Muda dengan Dalaman Kaos Warna Putih -->
+              Tampil segar dan stylish dengan ... (Deskripsi panjang) 
+            </p>
+            <button class="bttn" id="show-hide-button" onclick="toggleDescription()">
+              <i class="fas fa-eye"></i> Show Description
+            </button>
+            
+            <div>
+              <button class="bttn fav" onclick="addToWishlist('Kemeja', 50000)">
+                <i class="far fa-heart" id="wishlist-icon"></i>
+              </button>
+              <button class="bttn" onclick="addToCart('Kemeja', 50000)">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- ... Lainnya Produk ... -->
+        </div>
+      </div>
+    </div>
+    <!-- Keranjang Belanja -->
+    <div class="cart hide">
+      <h3 class="cart-title">
+        <img src="ooki.png" alt="Logo" style="width: 20px; height: 20px;">
+      </h3>
+      <ul id="cart-items"></ul>
+      <button class="btn btn-primary" onclick="checkoutCart()">Checkout</button>
+    </div>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <img src="anime-cute.gif" alt="Loading" class="loading-image">
+    </div>
+    <!-- Pemberitahuan Checkout -->
+    <div class="notification hide"></div>
+  </main>
+  <footer>
+    <div class="center-footer">
+      <div class="main-footer">
+        <div class="left-footer">
+          <h3 class="info-left progress"><b>PRG024</b></h3>
+          <h3 class="info-left"><b>Product</b></h3>
+          <p class="info-left">Pakaian Pria</p>
+          <p class="info-left">Pakaian Wanita</p>
+        </div>
+        <div class="right-footer">
+          <h3 class="info-right">
+            <i class="far fa-address-book icon"></i> <b>Customer Service</b>
+          </h3>
+          <p class="info-right"> +6287876667564</p>
+          <p class="info-right"> prg024@gmail.com</p>
+        </div>
+      </div>
+      <div class="main-footer payment">
+        <h3 class="pay">Payment Method</h3>
+        <div class="social-media">
+          <img src="assets/atm_bersama.png" alt="" class="payment-img" />
+          <img src="assets/BCA.png" alt="" class="payment-img" />
+          <img src="assets/bni.png" alt="" class="payment-img" />
+          <img src="assets/gopay-web.png" alt="" class="payment-img" />
+          <img src="assets/prima.png" alt="" class="payment-img" />
+          <img src="assets/visa.png" alt="" class="payment-img" />
+        </div>
+      </div>
+      <div class="main-footer">
+        <p class="info-center">
+          Copyright &copy; 2023 Designed by PRG024
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <script>
+      // Definisikan API URL
+  const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
 
-<main>
-<div class="content">
-<div class="product-container">
-<h3 class="main-title">Lorem Ipsum</h3>
-<div class="item-container">
-<div class="product white">
-<img src="assets/kemeja1.jpg" alt="" width="60%" height="auto" />
-<h3><a href="product.html">Kemeja</a></h3>
-<p>Put the description here</p>
-<div>
-<button class="bttn fav" onclick="addToWishlist('Kemeja', 50000)">
-<i class="far fa-heart"></i>
-</button>
-<button class="bttn" onclick="addToCart('Kemeja', 50000)">
-<i class="fas fa-shopping-cart"></i>
-</button>
-</div>
-</div>
-<!-- ... Lainnya Produk ... -->
-</div>
-</div>
+// Rest of the JavaScript code
 
-<!-- Keranjang Belanja -->
-<div class="cart hide">
-<h3 class="cart-title">
-<img src="ooki.png" alt="Logo" style="width: 20px; height: 20px;">
-</h3>
-<ul id="cart-items"></ul>
-<button class="btn btn-primary" onclick="checkoutCart()">Checkout</button>
-</div>
-</div>
-
-<!-- Loading Screen -->
-<div id="loading-screen" class="loading-screen">
-<img src="anime-cute.gif" alt="Loading" class="loading-image">
-</div>
-
-<!-- Pemberitahuan Checkout -->
-<div class="notification hide"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script>
-// Menampilkan loading screen saat website dimuat
-document.onreadystatechange = function() {
-  const loadingScreen = document.getElementById("loading-screen");
-  if (document.readyState === "complete") {
-    setTimeout(function() {
-      loadingScreen.style.opacity = "0";
-      setTimeout(function() {
-        loadingScreen.style.display = "none";
-      }, 1000);
-    }, 3000);
-  }
-};
-
-// Keranjang belanja dan Wishlist
-const cartItems = [];
-const wishlistItems = [];
-
-function addToCart(product, price) {
-  cartItems.push({
-    product,
-    price,
-  });
-  renderCart();
-}
-
+// Fungsi untuk menambahkan item ke wishlist
 function addToWishlist(product, price) {
   wishlistItems.push({
     product,
     price,
   });
   renderWishlist();
-}
 
-function removeFromCart(index) {
-  cartItems.splice(index, 1);
-  renderCart();
-}
-
-function removeFromWishlist(index) {
-  wishlistItems.splice(index, 1);
-  renderWishlist();
-}
-
-function renderCart() {
-  const cartItemsElement = document.getElementById("cart-items");
-  cartItemsElement.innerHTML = "";
-
-  let totalPrice = 0;
-  cartItems.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.className = "cart-item";
-    li.innerHTML = `
-      <span>${item.product} - RP${item.price.toLocaleString()}</span>
-      <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
-    `;
-    cartItemsElement.appendChild(li);
-    totalPrice += item.price;
-  });
-
-  if (cartItems.length === 0) {
-    cartItemsElement.innerHTML = '<li id="empty-cart-msg">Belum ada barang di keranjang</li>';
-    setTimeout(() => {
-      const emptyCartMsg = document.getElementById("empty-cart-msg");
-      emptyCartMsg.style.animation = "fadeOut 1s forwards";
-      setTimeout(() => {
-        emptyCartMsg.style.display = "none";
-      }, 1000);
-    }, 0);
-  }
-
-  // Tampilkan total harga
-  const totalPriceElement = document.createElement("li");
-  totalPriceElement.className = "cart-item";
-  totalPriceElement.innerHTML = `<span>Total: RP${totalPrice.toLocaleString()}</span>`;
-  cartItemsElement.appendChild(totalPriceElement);
-
-  // Tampilkan keranjang belanja
-  const cart = document.querySelector(".cart");
-  if (cartItems.length > 0) {
-    cart.classList.remove("hide");
-  } else {
-    cart.classList.add("hide");
-  }
-}
-
-function renderWishlist() {
-  // Render wishlist items here
-  // ...
-}
-
-function checkoutCart() {
-  const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
-
-  // Menggunakan fetch API untuk POST data ke API
+  // Lakukan permintaan POST ke API untuk menyimpan wishlist
   fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(cartItems),
+    body: JSON.stringify(wishlistItems),
   })
     .then((response) => {
       if (!response.ok) {
@@ -357,8 +361,8 @@ function checkoutCart() {
       return response.json();
     })
     .then((data) => {
-      // Tampilkan pemberitahuan popup jika checkout berhasil
-      showNotification("Checkout berhasil!", true);
+      // Tampilkan pemberitahuan popup jika wishlist berhasil ditambahkan
+      showNotification("Wishlist Added!", true);
     })
     .catch((error) => {
       console.error(error);
@@ -367,54 +371,175 @@ function checkoutCart() {
     });
 }
 
-function showNotification(message, success = true) {
+// Fungsi untuk menampilkan wishlist
+function renderWishlist() {
+  const wishlistIcon = document.getElementById("wishlist-icon");
+  if (wishlistItems.length > 0) {
+    wishlistIcon.classList.add("clicked");
+  } else {
+    wishlistIcon.classList.remove("clicked");
+  }
+
+  // Tampilkan popup informasi jumlah wishlist yang ditambahkan
   const notification = document.querySelector(".notification");
-  notification.className = `notification ${success ? "success" : "error"}`;
-  notification.innerText = message;
+  notification.className = `notification success`;
+  notification.innerText = `Wishlist Added: ${wishlistItems.length}`;
   notification.style.display = "block";
 
-  // Hilangkan pemberitahuan setelah 3 detik
+  // Hilangkan popup setelah 3 detik
   setTimeout(() => {
     notification.style.display = "none";
   }, 3000);
 }
-</script>
-</main>
 
-<footer>
-<div class="center-footer">
-<div class="main-footer">
-<div class="left-footer">
-<h3 class="info-left progress"><b>PRG024</b></h3>
-<h3 class="info-left"><b>Product</b></h3>
-<p class="info-left">Pakaian Pria</p>
-<p class="info-left">Pakaian Wanita</p>
-</div>
-<div class="right-footer">
-<h3 class="info-right">
-<i class="far fa-address-book icon"></i> <b>Customer Service</b>
-</h3>
-<p class="info-right"> +6287876667564</p>
-<p class="info-right"> prg024@gmail.com</p>
-</div>
-</div>
-<div class="main-footer payment">
-<h3 class="pay">Payment Method</h3>
-<div class="social-media">
-<img src="assets/atm_bersama.png" alt="" class="payment-img" />
-<img src="assets/BCA.png" alt="" class="payment-img" />
-<img src="assets/bni.png" alt="" class="payment-img" />
-<img src="assets/gopay-web.png" alt="" class="payment-img" />
-<img src="assets/prima.png" alt="" class="payment-img" />
-<img src="assets/visa.png" alt="" class="payment-img" />
-</div>
-</div>
-<div class="main-footer">
-<p class="info-center">
-Copyright &copy; 2023 Designed by PRG024
-</p>
-</div>
-</div>
-</footer>
+// Rest of the JavaScript code
+    // Menampilkan loading screen saat website dimuat
+    document.onreadystatechange = function () {
+      const loadingScreen = document.getElementById("loading-screen");
+      if (document.readyState === "complete") {
+        setTimeout(function () {
+          loadingScreen.style.opacity = "0";
+          setTimeout(function () {
+            loadingScreen.style.display = "none";
+          }, 1000);
+        }, 3000);
+      }
+    };
+
+     // Fungsi untuk menampilkan atau menyembunyikan deskripsi produk
+     function toggleDescription() {
+  const description = document.getElementById("product-description");
+  const showHideButton = document.getElementById("show-hide-button");
+
+  if (description.classList.contains("hide")) {
+    description.classList.remove("hide");
+    showHideButton.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Description';
+  } else {
+    description.classList.add("hide");
+    showHideButton.innerHTML = '<i class="fas fa-eye"></i> Show Description';
+  }
+}
+
+
+    // Keranjang belanja dan Wishlist
+    const cartItems = [];
+    const wishlistItems = [];
+
+    function addToCart(product, price) {
+      cartItems.push({
+        product,
+        price,
+      });
+      renderCart();
+    }
+
+    function addToWishlist(product, price) {
+      wishlistItems.push({
+        product,
+        price,
+      });
+      renderWishlist();
+    }
+
+    function removeFromCart(index) {
+      cartItems.splice(index, 1);
+      renderCart();
+    }
+
+    function removeFromWishlist(index) {
+      wishlistItems.splice(index, 1);
+      renderWishlist();
+    }
+
+    function renderCart() {
+      const cartItemsElement = document.getElementById("cart-items");
+      cartItemsElement.innerHTML = "";
+      let totalPrice = 0;
+      cartItems.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "cart-item";
+        li.innerHTML = `
+          <span>${item.product} - RP${item.price.toLocaleString()}</span>
+          <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
+        `;
+        cartItemsElement.appendChild(li);
+        totalPrice += item.price;
+      });
+
+      // Tampilkan total harga
+      const totalPriceElement = document.createElement("li");
+      totalPriceElement.className = "cart-item";
+      totalPriceElement.innerHTML = `<span>Total: RP${totalPrice.toLocaleString()}</span>`;
+      cartItemsElement.appendChild(totalPriceElement);
+
+      // Tampilkan keranjang belanja
+      const cart = document.querySelector(".cart");
+      if (cartItems.length > 0) {
+        cart.classList.remove("hide");
+      } else {
+        cart.classList.add("hide");
+      }
+    }
+
+    function renderWishlist() {
+      const wishlistIcon = document.getElementById("wishlist-icon");
+      if (wishlistItems.length > 0) {
+        wishlistIcon.classList.add("clicked");
+      } else {
+        wishlistIcon.classList.remove("clicked");
+      }
+
+      // Tampilkan popup informasi jumlah wishlist yang ditambahkan
+      const notification = document.querySelector(".notification");
+      notification.className = `notification success`;
+      notification.innerText = `Wishlist Added: ${wishlistItems.length}`;
+      notification.style.display = "block";
+
+      // Hilangkan popup setelah 3 detik
+      setTimeout(() => {
+        notification.style.display = "none";
+      }, 3000);
+    }
+
+    function checkoutCart() {
+      const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
+      // Menggunakan fetch API untuk POST data ke API
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cartItems),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Terjadi kesalahan saat menyimpan data ke server.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Tampilkan pemberitahuan popup jika checkout berhasil
+          showNotification("Checkout berhasil!", true);
+        })
+        .catch((error) => {
+          console.error(error);
+          // Tampilkan pemberitahuan popup dengan pesan error jika terjadi kesalahan
+          showNotification("Terjadi kesalahan saat menyimpan data ke server.", false);
+        });
+    }
+
+    function showNotification(message, success = true) {
+      const notification = document.querySelector(".notification");
+      notification.className = `notification ${success ? "success" : "error"}`;
+      notification.innerText = message;
+      notification.style.display = "block";
+      // Hilangkan pemberitahuan setelah 3 detik
+      setTimeout(() => {
+        notification.style.display = "none";
+      }, 3000);
+    }
+
+  </script>
 </body>
+
 </html>
