@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <title>Toped</title>
   <style>
     footer {
@@ -35,6 +37,27 @@
 
     .hide {
   display: none;
+}
+.wishlist-icon.clicked {
+  animation: spinAndColor 3.5s, pulseRed 3s;
+}
+
+@keyframes spinAndColor {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseRed {
+  0%, 100% {
+    color: red;
+  }
+  50% {
+    color: initial;
+  }
 }
 
 
@@ -257,25 +280,44 @@
         <h3 class="main-title">Lorem Ipsum</h3>
         <div class="item-container">
           <div class="product white">
-            <img src="assets/kemeja1.jpg" alt="" width="60%" height="auto" />
-            <h3><a href="product.html">Kemeja</a></h3>
-            <p id="product-description" class="product-description hide">
-              Deskripsi Produk: Kemeja Berwarna Biru Muda dengan Dalaman Kaos Warna Putih -->
-              Tampil segar dan stylish dengan ... (Deskripsi panjang) 
+            <img src="assets/baju2.jpg" alt="" width="60%" height="auto" />
+            <h3><a href="product.html">Produk Baru</a></h3>
+            <p id="product-description-1" class="product-description hide">
+              Deskripsi Produk: Ini adalah produk baru yang menakjubkan.
             </p>
-            <button class="bttn" id="show-hide-button" onclick="toggleDescription()">
+            <button class="bttn" onclick="toggleDescription('product-description-1', 'show-hide-button-1')">
               <i class="fas fa-eye"></i> Show Description
             </button>
-            
+            <div>
+              <button class="bttn fav" onclick="addToWishlist('Produk Baru', 100000)">
+                <i class="far fa-heart"></i>
+              </button>
+              <button class="bttn" onclick="addToCart('Produk Baru', 100000)">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="product white">
+            <img src="assets/kemeja1.jpg" alt="" width="60%" height="auto" />
+            <h3><a href="product.html">Kemeja</a></h3>
+            <p id="product-description-2" class="product-description hide">
+              Deskripsi Produk: Kemeja Berwarna Biru Muda dengan Dalaman Kaos Warna Putih 
+              Tampil segar dan stylish dengan ...
+            </p>
+            <button class="bttn" onclick="toggleDescription('product-description-2', 'show-hide-button-2')">
+              <i class="fas fa-eye"></i> Show Description
+            </button>
             <div>
               <button class="bttn fav" onclick="addToWishlist('Kemeja', 50000)">
-                <i class="far fa-heart" id="wishlist-icon"></i>
+                <i class="far fa-heart"></i>
               </button>
               <button class="bttn" onclick="addToCart('Kemeja', 50000)">
                 <i class="fas fa-shopping-cart"></i>
               </button>
             </div>
           </div>
+          
           
           <!-- ... Lainnya Produk ... -->
         </div>
@@ -336,7 +378,8 @@
       // Definisikan API URL
   const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
 
-// Rest of the JavaScript code
+
+
 
 // Fungsi untuk menambahkan item ke wishlist
 function addToWishlist(product, price) {
@@ -345,6 +388,16 @@ function addToWishlist(product, price) {
     price,
   });
   renderWishlist();
+
+  // Tambahkan kelas 'clicked' untuk memicu animasi pada ikon wishlist
+  const wishlistIcon = document.getElementById("wishlist-icon");
+  wishlistIcon.classList.add("clicked");
+
+  // Hilangkan kelas 'clicked' setelah animasi selesai
+  setTimeout(() => {
+    wishlistIcon.classList.remove("clicked");
+  }, 3500); // 3.5 detik
+
 
   // Lakukan permintaan POST ke API untuk menyimpan wishlist
   fetch(apiUrl, {
@@ -407,9 +460,9 @@ function renderWishlist() {
     };
 
      // Fungsi untuk menampilkan atau menyembunyikan deskripsi produk
-     function toggleDescription() {
-  const description = document.getElementById("product-description");
-  const showHideButton = document.getElementById("show-hide-button");
+     function toggleDescription(descriptionId, buttonId) {
+  const description = document.getElementById(descriptionId);
+  const showHideButton = document.getElementById(buttonId);
 
   if (description.classList.contains("hide")) {
     description.classList.remove("hide");
@@ -419,7 +472,6 @@ function renderWishlist() {
     showHideButton.innerHTML = '<i class="fas fa-eye"></i> Show Description';
   }
 }
-
 
     // Keranjang belanja dan Wishlist
     const cartItems = [];
