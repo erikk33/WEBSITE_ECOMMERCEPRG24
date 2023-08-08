@@ -14,6 +14,94 @@
 
   <title>Toped</title>
   <style>
+
+
+/* Tambahkan aturan CSS khusus untuk styling teks dalam mode malam */
+body.dark-mode .cart-item {
+  color: #000000; /* Ganti dengan warna yang sesuai */
+}
+
+/* Night Mode Styles */
+body.dark-mode {
+  background-color: #111;
+  color: #ffffff;
+}
+
+/* Tambahkan aturan CSS khusus untuk styling teks dalam mode malam */
+body.dark-mode .product-description {
+  color: #000000; /* Warna abu-abu terang untuk teks dalam mode malam */
+}
+
+/* Night Mode Styles */
+body.dark-mode {
+  background-color: #111;
+  color: #fff;
+}
+
+.night-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  cursor: pointer;
+  color: #da373d;
+  font-size: 24px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.night-mode-toggle:hover {
+  opacity: 1;
+}
+
+
+
+
+
+
+
+@keyframes eraseText {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+  }
+    nav {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #da373d;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.3s;
+    }
+
+    nav a:hover {
+      color: #da373d;
+    }
+
+    nav a.active::before {
+      transform: scaleX(1);
+    }
     footer {
   background-image: linear-gradient(rgb(245, 235, 220), rgb(245, 224, 192));
   font-family: 'Alegreya Sans SC', sans-serif;
@@ -265,7 +353,8 @@
   <header>
     <div class="main-header">
       <h3 class="header-info">
-        <a href="index.html">Toped <i class="fas fa-store"></i></a>
+        <a href="index.html" class="active">Toped <i class="fas fa-store"></i></a>
+
       </h3>
       <nav>
         <a href="FAQ.html">FAQ</a>
@@ -274,14 +363,21 @@
       </nav>
     </div>
   </header>
+  <!-- Night Mode Toggle Button -->
+<div class="night-mode-toggle">
+  <i class="fas fa-moon"></i>
+</div>
+
   <main>
+    
     <div class="content">
       <div class="product-container">
-        <h3 class="main-title">PRG 24 Clothes</h3>
+        <h3 class="main-title" id="typewriter-text" onclick="startTypewriterAnimation()">PRG 24 Clothes</h3>
+
         <div class="item-container">
           <div class="product white">
             <img src="assets/baju2.jpg" alt="" width="60%" height="auto" />
-            <h3><a href="product.html">Kaos anime</a></h3>
+            <h3><a href="product2.html">Kaos anime</a></h3>
             <p id="product-description-1" class="product-description hide">
               Deskripsi Produk: Ini adalah produk baru yang menakjubkan.
             </p>
@@ -289,10 +385,10 @@
               <i class="fas fa-eye"></i> Show Description
             </button>
             <div>
-              <button class="bttn fav" onclick="addToWishlist('Produk Baru', 100000)">
+              <button class="bttn fav" onclick="addToWishlist('Kaos anime', 100000)">
                 <i class="far fa-heart"></i>
               </button>
-              <button class="bttn" onclick="addToCart('Produk Baru', 100000)">
+              <button class="bttn" onclick="addToCart('Kaos anime', 100000)">
                 <i class="fas fa-shopping-cart"></i>
               </button>
             </div>
@@ -365,16 +461,116 @@
           <img src="assets/prima.png" alt="" class="payment-img" />
           <img src="assets/visa.png" alt="" class="payment-img" />
         </div>
-      </div>
-      <div class="main-footer">
-        <p class="info-center">
           Copyright &copy; 2023 Designed by PRG024
         </p>
       </div>
     </div>
   </footer>
+      </div>
+      <div class="main-footer">
+        <p class="info-center">
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <script>
+
+// Fungsi untuk menjalankan animasi typewriter
+function startTypewriterAnimation() {
+  const textElement = document.getElementById("typewriter-text");
+  const text = textElement.innerText;
+  textElement.innerHTML = ""; // Hapus teks asli
+
+  // Jalankan animasi typewriter
+  let charIndex = 0;
+  const interval = setInterval(() => {
+    if (charIndex < text.length) {
+      textElement.innerHTML += text.charAt(charIndex);
+      charIndex++;
+    } else {
+      clearInterval(interval); // Hentikan animasi jika semua karakter ditampilkan
+    }
+  }, 100); // Waktu interval antara setiap karakter (milidetik)
+}
+
+
+
+
+
+// Night Mode Toggle
+const nightModeToggle = document.querySelector(".night-mode-toggle");
+const body = document.body;
+
+nightModeToggle.addEventListener("click", () => {
+  // Add or remove 'dark-mode' class to toggle night mode
+  body.classList.toggle("dark-mode");
+
+  // Fade effect
+  body.style.transition = "background-color 3s ease";
+  body.style.backgroundColor = body.classList.contains("dark-mode") ? "#111" : "#f1f1f1";
+
+  // Wait for the fade effect to complete before changing the page
+  
+});
+
+
+
+// Menggunakan fetch API untuk mengambil data pengguna yang baru login
+fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up")
+  .then((response) => response.json())
+  .then((data) => {
+    const loggedInUser = data[data.length - 1].username; // Mengambil data pengguna paling baru
+    if (loggedInUser) {
+      // Ganti teks "Login" dengan username yang telah login
+      const loginLink = document.querySelector("nav a[href='login_page.html']");
+      loginLink.innerText = loggedInUser;
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+  // Ambil username yang telah login dari localStorage
+  const loggedInUser = localStorage.getItem("loggedInUser");
+
+  if (loggedInUser) {
+    // Ganti teks "Login" dengan username yang telah login
+    const loginLink = document.querySelector("nav a[href='login_page.html']");
+    loginLink.innerText = loggedInUser;
+  }
+
+  // Get the login button and add a click event listener
+  const loginButton = document.querySelector("nav a[href='login_page.html']");
+  loginButton.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    // Add eraser text animation
+    animateEraserText(loginButton);
+
+    // Simulate login process
+    setTimeout(function () {
+      // Replace the eraser text with the original text
+      loginButton.innerText = loggedInUser;
+
+      // Redirect to the login page after animation is complete
+      window.location.href = "login_page.html";
+    }, 3000);
+  });
+});
+
+// Function to animate eraser text
+function animateEraserText(element) {
+  let originalText = element.innerText;
+  element.innerText = "";
+
+  const characters = originalText.split("");
+  characters.forEach((char, index) => {
+    const span = document.createElement("span");
+    span.innerText = char;
+    span.style.animation = `eraseText 3s ${index * 0.1}s forwards`;
+    element.appendChild(span);
+  });
+}
       // Definisikan API URL
   const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
 

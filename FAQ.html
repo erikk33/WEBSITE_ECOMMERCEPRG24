@@ -1,303 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    /* Sesuaikan style tambahan di sini */
-    body {
-      background-image: url('index_htmlbackground.png');
-      background-size: cover;
-    }
+    @keyframes shootEffect {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(50px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+}
 
+.back-button.shooting {
+  animation: shootEffect 3s ease-in-out;
+  transform: translateX(100px);
+  opacity: 0;
+}
 
-    .navbar {
-      background-color: #da373d;
-      padding: 10px;
-    }
-
-
-    .navbar-brand {
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-    }
-
-
-    .navbar-brand img {
-      width: 50px;
-      height: auto;
-    }
-
-
-    .navbar-toggler {
-      border: none;
-      outline: none;
-      padding: 0;
-      background-color: transparent;
-    }
-
-
-    .navbar-toggler-icon {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      cursor: pointer;
-      filter: invert(100%);
-    }
-
-
-    .navbar-nav {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-
-    .nav-item a {
-      font-size: 16px;
-      color: #fff;
-      transition: color 0.3s ease;
-    }
-
-
-    .nav-item a:hover {
-      color: #f8f9fa;
-    }
-
-
-    .form-control {
-      width: 200px;
-    }
-
-
-    .btn {
-      font-size: 14px;
-      padding: 6px 12px;
-    }
-
-
-    @media (max-width: 576px) {
-      .navbar-brand {
-        font-size: 20px;
-      }
-
-
-      .navbar-nav {
-        display: none;
-      }
-
-
-      .navbar-collapse.show .navbar-nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-
-      .navbar-toggler-icon {
-        filter: invert(0%);
-      }
-
-
-      .form-control {
-        display: none;
-      }
-    }
-
-
-    /* Tambahkan style untuk keranjang belanja */
-    .cart {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      background-color: #ffffff;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-
-    .cart-title {
-      font-weight: bold;
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-    }
-
-
-    .cart-title img {
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
-    }
-
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5px;
-    }
-
-
-    .cart-item i {
-      cursor: pointer;
-    }
-
-
-    @keyframes fadeOut {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-
-    .swiper-container {
-      width: 100%;
-      height: 100%;
-    }
-
-
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: #da373d;
-      font-size: 32px;
-    }
-
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-      color: #da373d;
-    }
-
-
-    .navbar-toggler:focus {
-      outline: none;
-    }
-
-
-    .ripple {
-      position: relative;
-      overflow: hidden;
-      transform: translate3d(0, 0, 0);
-    }
-
-
-    .ripple:after {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      background-image: radial-gradient(circle, #ffffff 10%, transparent 10.01%);
-      background-repeat: no-repeat;
-      background-position: 50%;
-      transform: scale(10, 10);
-      opacity: 0;
-      transition: transform 0.5s, opacity 1s;
-    }
-
-
-    .ripple:active:after {
-      transform: scale(0, 0);
-      opacity: 0.3;
-      transition: 0s;
-    }
-
-    /* Tambahkan style untuk loading screen */
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 1s;
-    }
-
-    .loading-image {
-      width: 200px;
-      height: auto;
-    }
-  </style>
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="3674517.jpg" alt="Logo" />
-        <span id="toped-text" class="hidden">Toped</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon ripple" onclick="rippleEffect(event)"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active ripple" aria-current="page" href="index.html" onclick="rippleEffect(event)">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ripple" href="contact/contact.html" onclick="rippleEffect(event)">contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ripple" href="FAQ.html" onclick="rippleEffect(event)">FAQ</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle ripple" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false" onclick="rippleEffect(event)">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Action</a></li>
-              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" onclick="rippleEffect(event)">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active ripple" href="login_page.html" onclick="rippleEffect(event)">Login</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
+  body {
       font-family: Arial, sans-serif;
       background-color: #f7f7f7;
       margin: 0;
@@ -324,10 +54,21 @@
       color: #333;
       margin-bottom: 10px;
       transition: color 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .question:hover {
       color: #e74c3c;
+    }
+
+    .question .icon {
+      transition: transform 0.3s;
+    }
+
+    .question.active .icon {
+      transform: rotate(180deg);
     }
 
     .answer {
@@ -335,10 +76,6 @@
       overflow: hidden;
       transition: max-height 0.3s ease-out;
       color: #555;
-    }
-
-    .question.active {
-      color: #e74c3c;
     }
 
     .question.active + .answer {
@@ -449,12 +186,29 @@
     .hide {
       display: none;
     }
-  </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    .back-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px; /* Mengubah right menjadi left */
+  display: flex;
+  align-items: center;
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
 
+
+    .back-button .icon {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
   <script>
-    
-    window.onload = function () {
+ window.onload = function () {
       const questions = document.getElementsByClassName("question");
 
       for (let i = 0; i < questions.length; i++) {
@@ -517,13 +271,13 @@
     };
   </script>
 </head>
-
 <body>
   <h1>FAQ - Tokped</h1>
 
   <div class="faq">
-    <div class="question">Bagaimana cara melakukan pembelian?</div>
-    <div class="answer">Anda dapat melakukan pembelian dengan mengikuti langkah-langkah berikut:
+    <div class="question">Bagaimana cara melakukan pembelian? <i class="icon fas fa-chevron-down"></i></div>
+    <div class="answer">
+      Anda dapat melakukan pembelian dengan mengikuti langkah-langkah berikut:
       <ol>
         <li>Pilih produk yang ingin Anda beli dan tambahkan ke keranjang.</li>
         <li>Periksa kembali item yang ada di keranjang Anda dan klik tombol Checkout atau Lanjut ke Pembayaran.</li>
@@ -536,7 +290,7 @@
   </div>
 
   <div class="faq">
-    <div class="question">Apa keuntungan berbelanja di e-commerce?</div>
+    <div class="question">Apa keuntungan berbelanja di e-commerce?<i class="icon fas fa-chevron-down"></i></div>
     <div class="answer">Berbelanja di e-commerce memiliki beberapa keuntungan, antara lain:
       <ul>
         <li>Kemudahan akses: Anda dapat mengakses berbagai produk dan toko dari mana saja dan kapan saja.</li>
@@ -552,7 +306,7 @@
   </div>
 
   <div class="faq">
-    <div class="question">Bagaimana cara mengembalikan atau menukar produk yang dibeli?</div>
+    <div class="question">Bagaimana cara mengembalikan atau menukar produk yang dibeli?<i class="icon fas fa-chevron-down"></i></div>
     <div class="answer">Setiap e-commerce memiliki kebijakan pengembalian atau penukaran yang berbeda-beda, tetapi
       umumnya langkah-langkahnya adalah sebagai berikut:
       <ol>
@@ -569,7 +323,7 @@
   </div>
 
   <div class="faq">
-    <div class="question">Apakah aman untuk berbelanja di e-commerce?</div>
+    <div class="question">Apakah aman untuk berbelanja di e-commerce?<i class="icon fas fa-chevron-down"></i></div>
     <div class="answer">Berbelanja di e-commerce dapat aman jika Anda mengambil langkah-langkah pencegahan yang tepat,
       seperti:
       <ul>
@@ -584,6 +338,12 @@
       yang terlalu bagus untuk menjadi kenyataan.
     </div>
   </div>
+
+  <div class="back-button" onclick="goToTop()">
+    <i class="icon fas fa-arrow-up"></i>
+    <span>Back to Top</span>
+  </div>
+  
 
   <div class="chat-bubble-container">
     <div class="chat-bubble">
@@ -608,6 +368,43 @@
       <button class="chat-send">Send</button>
     </div>
   </div>
-</body>
 
+ 
+
+  <script>
+    function goToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.body.style.overflow = "hidden";
+  setTimeout(function () {
+    document.body.style.overflow = "auto";
+  }, 3500);
+
+  // Redirect to index.html
+  setTimeout(function () {
+    window.location.href = "index.html"; // Ganti dengan URL yang sesuai
+  }, 500);
+
+   // Add 'shooting' class to the back button
+   document.querySelector(".back-button").classList.add("shooting");
+
+// Remove 'shooting' class after the animation duration (3 seconds)
+setTimeout(function () {
+  document.querySelector(".back-button").classList.remove("shooting");
+}, 3000);
+}
+
+    // ... (Existing Script) ...
+    const backButtons = document.querySelectorAll(".back-button");
+
+    backButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.body.style.overflow = "hidden";
+        setTimeout(function () {
+          document.body.style.overflow = "auto";
+        }, 3500);
+      });
+    });
+  </script>
+</body>
 </html>

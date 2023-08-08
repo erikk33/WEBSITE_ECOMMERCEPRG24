@@ -210,7 +210,42 @@
          <p id="popup-message"></p>
       </div>
    </div>
+
+   
    <script>
+
+// Objek untuk melacak jumlah percobaan login gagal
+let failedLoginAttempts = {};
+
+
+
+     function loginUser() {
+  const username = document.getElementById("username").value;
+
+  // Simpan username di localStorage saat login
+  localStorage.setItem("loggedInUser", username);
+
+  // Tambahkan informasi pengguna baru ke mock API setelah login berhasil
+  fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Pindah ke halaman utama setelah login
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
       function showSignUp() {
          document.getElementById("form").classList.add("hidden");
          document.getElementById("signup-form").classList.remove("hidden");
@@ -226,33 +261,77 @@
          document.getElementById("form").classList.add("hidden");
          document.getElementById("forgot-password-form").classList.remove("hidden");
       }
-     
       function submitForm(event) {
-         event.preventDefault();
-         const username = document.getElementById("username").value;
-         const password = document.getElementById("password").value;
+   event.preventDefault();
+   const username = document.getElementById("username").value;
+   const password = document.getElementById("password").value;
 
-         // Kirim permintaan ke backend mock API
-         fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up")
-            .then((response) => response.json())
-            .then((data) => {
-               const foundUser = data.find(
-                  (user) =>
-                     user.username === username && user.password === password
-               );
+   const currentTime = new Date().getTime();
 
-               if (foundUser) {
-                  window.location.href = "index.html"; // Redirect ke halaman index.html
-               } else {
-                  showPopup("Login gagal username & password ada yang salah. 😭");
-               }
-            })
-            .catch((error) => {
-               console.error("Error:", error);
-               showPopup("An error occurred");
-            });
+   // Menambahkan percobaan login gagal ke objek dan waktu terakhir percobaan
+   if (!failedLoginAttempts[username]) {
+      failedLoginAttempts[username] = {
+         count: 1,
+         lastAttempt: currentTime,
+      };
+   } else {
+      // Cek jika waktu terakhir percobaan lebih dari 3 jam yang lalu, reset counter
+      if (currentTime - failedLoginAttempts[username].lastAttempt > 3 * 60 * 60 * 1000) {
+         failedLoginAttempts[username].count = 0;
       }
-     
+
+      failedLoginAttempts[username].count++;
+      failedLoginAttempts[username].lastAttempt = currentTime;
+   }
+
+   // Kunci tombol login setelah mencapai batas maksimum percobaan gagal
+   if (failedLoginAttempts[username].count >= 3) {
+      document.getElementById("username").disabled = true;
+      document.getElementById("password").disabled = true;
+      document.getElementById("login-button").disabled = true;
+      showPopupAndUnblock(username);
+      return;
+   }
+
+   // Kirim permintaan ke backend mock API
+   fetch("https://645b8b38a8f9e4d6e76b7a16.mockapi.io/sign_up")
+      .then((response) => response.json())
+      .then((data) => {
+         const foundUser = data.find(
+            (user) =>
+               user.username === username && user.password === password
+         );
+
+         if (foundUser) {
+            window.location.href = "index.html"; // Redirect ke halaman index.html
+         } else {
+            showPopup("Login gagal username & password ada yang salah. 😭");
+         }
+      })
+      .catch((error) => {
+         console.error("Error:", error);
+         showPopup("An error occurred");
+      });
+}
+
+function showPopupAndUnblock(username) {
+   showPopup("Akun Anda telah diblokir. Silakan coba lagi dalam 3 detik.");
+   setTimeout(function() {
+      document.getElementById("username").disabled = false;
+      document.getElementById("password").disabled = false;
+      document.getElementById("login-button").disabled = false;
+      unblockUser(username);
+      closePopup();
+   }, 3000);
+}
+
+function unblockUser(username) {
+   failedLoginAttempts[username].count = 0;
+}
+
+
+
+
       function submitSignUp(event) {
          event.preventDefault();
          const username = document.getElementById("signup-username").value;
