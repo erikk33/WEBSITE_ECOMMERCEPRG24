@@ -2,168 +2,216 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-  <style>
-    /* Your additional styles here */
-    body {
-      background-color: white;
-    }
-
-    /* ... Other CSS code ... */
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <!-- ... Your Navbar code ... -->
-  </nav>
+    <div id="app" class="bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- ... Your Navbar code ... -->
+        </nav>
 
-  <div class="container mx-auto mt-5">
-    <div class="grid grid-cols-3 gap-4">
-      <!-- Product showcase -->
-      <div class="col-span-2">
-        <!-- ... Your Product showcase code ... -->
-      </div>
-      <!-- Shopping cart -->
-      <div class="cart hide">
-        <h3 class="cart-title">
-          <img src="—Pngtree—fast shopping cart icon design_5537563.png" alt="Logo" style="width: 20px; height: 20px;">
-        </h3>
-        <ul id="cart-items"></ul>
-        <div class="total-price">
-          <span>Total Harga: <span id="totalPrice">RP0</span></span>
+        <div class="container mx-auto mt-5">
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Product showcase -->
+                <div class="col-span-2">
+                    <h3 class="text-2xl mb-3">Produk yang Dibeli</h3>
+                    <ul id="selected-products" class="mb-4">
+                        <!-- List of selected products will be displayed here -->
+                    </ul>
+                    <button class="btn btn-primary" @click="addToCart">Tambah Produk ke Keranjang</button>
+                </div>
+                <!-- New section to display latest data -->
+                <div class="col-span-1">
+                    <h3 class="text-2xl mb-3">Data Terbaru</h3>
+                    <ul id="latest-data">
+                        <!-- List of latest data will be displayed here -->
+                    </ul>
+                </div>
+                <!-- Shopping cart -->
+                <div class="cart hide">
+                    <h3 class="cart-title">
+                        <img src="—Pngtree—fast shopping cart icon design_5537563.png" alt="Logo"
+                            style="width: 20px; height: 20px;">
+                    </h3>
+                    <ul id="cart-items">
+                        <!-- List of cart items will be displayed here -->
+                    </ul>
+                    <div class="total-price">
+                        <span>Total Harga: <span id="totalPrice">RP0</span></span>
+                    </div>
+                    <div class="payment-methods">
+                        <h4 class="text-lg mb-2">Pilih Metode Pembayaran:</h4>
+                        <label class="block mb-1">
+                            <input type="radio" name="paymentMethod" value="dana" v-model="selectedPaymentMethod">
+                            Dana
+                        </label>
+                        <label class="block mb-1">
+                            <input type="radio" name="paymentMethod" value="shopee" v-model="selectedPaymentMethod">
+                            Shopee Pay
+                        </label>
+                        <label class="block mb-1">
+                            <input type="radio" name="paymentMethod" value="gopay" v-model="selectedPaymentMethod">
+                            GoPay
+                        </label>
+                        <label class="block mb-1">
+                            <input type="radio" name="paymentMethod" value="transfer" v-model="selectedPaymentMethod">
+                            Transfer ke Bank Indonesia
+                        </label>
+                    </div>
+                    <button class="btn btn-primary btn-block mt-3" @click="checkout">Checkout</button>
+                </div>
+            </div>
         </div>
-        <div class="payment-methods">
-          <h4>Pilih Metode Pembayaran:</h4>
-          <label><input type="checkbox" name="paymentMethod" value="dana"> Dana</label>
-          <label><input type="checkbox" name="paymentMethod" value="shopee"> Shopee Pay</label>
-          <label><input type="checkbox" name="paymentMethod" value="gopay"> GoPay</label>
-          <label><input type="checkbox" name="paymentMethod" value="transfer"> Transfer ke Bank Indonesia</label>
-        </div>
-        <button class="btn btn-primary btn-block" onclick="checkout()">Checkout</button>
-      </div>
     </div>
-  </div>
 
-  <!-- ... Your Loading Screen code ... -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                cartItems: [],
+                selectedPaymentMethod: '' // To store the selected payment method
+            },
+            methods: {
+                async fetchLatestData() {
+                    const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang"; // Replace with your API URL
+                    try {
+                        const response = await fetch(apiUrl);
+                        const data = await response.json();
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-  <script>
-    // Your Swiper initialization and other JavaScript functions
+                        const latestData = Object.values(data);
 
-    // Function to fetch cart data from the API
-    async function fetchCartData() {
-      const apiUrl = "https://64b3fb360efb99d862689dda.mockapi.io/Faq/V1/keranjang";
-      try {
-        const response = await fetch(apiUrl);
-        const cartItems = await response.json();
+                        this.displayLatestData(latestData);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                },
+                displayLatestData(latestData) {
+                    const latestDataElement = document.getElementById("latest-data");
+                    latestDataElement.innerHTML = "";
 
-        // Calculate total price and display cart details
-        const totalPrice = calculateTotalPrice(cartItems);
-        displayCartDetails(cartItems, totalPrice);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+                    latestData.forEach((item, index) => {
+                        const li = document.createElement('li');
+                        li.className = 'latest-data-item';
+                        li.innerHTML = `
+                        <span>${item.product} - RP${item.price.toLocaleString()}</span>
+                    `;
+                        latestDataElement.appendChild(li);
+                    });
+                },
+                async fetchProducts() {
+                    const apiUrl = "https://your-mock-api-url"; // Replace with your API URL
+                    try {
+                        const response = await fetch(apiUrl);
+                        const products = await response.json();
 
-    // Calculate total price of cart items
-    function calculateTotalPrice(cartItems) {
-      return cartItems.reduce((total, item) => total + item.price, 0);
-    }
+                        this.displayProducts(products);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                },
+                displayProducts(products) {
+                    const selectedProductsElement = document.getElementById("selected-products");
+                    selectedProductsElement.innerHTML = "";
 
-    // Display cart details on the checkout page
-    function displayCartDetails(cartItems, totalPrice) {
-      const cartItemsElement = document.getElementById('cart-items');
-      const totalPriceElement = document.getElementById('totalPrice');
+                    products.forEach((item, index) => {
+                        const li = document.createElement('li');
+                        li.className = 'product';
+                        li.innerHTML = `
+                        <span>${item.product} - RP${item.price.toLocaleString()}</span>
+                        <button class="btn btn-sm btn-outline-primary mt-1" @click="addToCart(${item.id})">Tambahkan ke Keranjang</button>
+                    `;
+                        selectedProductsElement.appendChild(li);
+                    });
+                },
+                async fetchCartData() {
+                    const apiUrl = "https://your-mock-api-url"; // Replace with your API URL
+                    try {
+                        const response = await fetch(apiUrl);
+                        this.cartItems = await response.json();
 
-      // Clear previous cart items
-      cartItemsElement.innerHTML = '';
+                        this.renderCart();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                },
+                addToCart(productId) {
+                    const selectedProduct = this.cartItems.find(item => item.product_id === productId);
+                    if (!selectedProduct) {
+                        const product = {
+                            product_id: productId,
+                            product: `Product ${productId}`, // You can modify this based on your mock API response
+                            price: 10000 * productId // You can modify this based on your mock API response
+                        };
+                        this.cartItems.push(product);
+                        this.renderCart();
+                    }
+                },
+                removeFromCart(index) {
+                    this.cartItems.splice(index, 1);
+                    this.renderCart();
+                },
+                renderCart() {
+                    const cartItemsElement = document.getElementById('cart-items');
+                    const totalPriceElement = document.getElementById('totalPrice');
+                    let totalPrice = this.calculateTotalPrice(this.cartItems);
 
-      // Display each cart item
-      cartItems.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'cart-item';
-        li.innerHTML = `
-          <span>${item.product} - RP${item.price.toLocaleString()}</span>
-          <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
-        `;
-        cartItemsElement.appendChild(li);
-      });
+                    cartItemsElement.innerHTML = '';
 
-      // Display total price
-      totalPriceElement.textContent = `Total Harga: RP${totalPrice.toLocaleString()}`;
-    }
+                    this.cartItems.forEach((item, index) => {
+                        const li = document.createElement('li');
+                        li.className = 'cart-item';
+                        li.innerHTML = `
+                        <span>${item.product} - RP${item.price.toLocaleString()}</span>
+                        <i class="fas fa-trash" @click="removeFromCart(${index})"></i>
+                    `;
+                        cartItemsElement.appendChild(li);
+                    });
 
-    // Function to remove item from cart
-    function removeFromCart(index) {
-      cartItems.splice(index, 1);
-      renderCart();
-    }
+                    totalPriceElement.textContent = `Total Harga: RP${totalPrice.toLocaleString()}`;
 
-    // Function to render cart items and total price
-    function renderCart() {
-      const cartItemsElement = document.getElementById('cart-items');
-      const totalPriceElement = document.getElementById('totalPrice');
-      let totalPrice = calculateTotalPrice(cartItems);
+                    const cart = document.querySelector('.cart');
+                    if (this.cartItems.length > 0) {
+                        cart.classList.remove('hide');
+                    } else {
+                        cart.classList.add('hide');
+                    }
+                },
+                calculateTotalPrice(cartItems) {
+                    return cartItems.reduce((total, item) => total + item.price, 0);
+                },
+                checkout() {
+                    if (!this.selectedPaymentMethod) {
+                        alert('Pilih salah satu metode pembayaran.');
+                        return;
+                    }
 
-      // Clear previous cart items
-      cartItemsElement.innerHTML = '';
+                    const phoneNumber = "0895331309082";
+                    const paymentInfo = `Metode Pembayaran: ${this.selectedPaymentMethod}\nTotal Harga: RP${this.calculateTotalPrice(this.cartItems).toLocaleString()}`;
+                    const message = `Saya ingin membeli barang dan membayarnya melalui metode pembayaran yang sebelumnya dipilih disini:\n\n${paymentInfo}`;
 
-      // Display each cart item
-      cartItems.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'cart-item';
-        li.innerHTML = `
-          <span>${item.product} - RP${item.price.toLocaleString()}</span>
-          <i class="fas fa-trash" onclick="removeFromCart(${index})"></i>
-        `;
-        cartItemsElement.appendChild(li);
-      });
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.location.href = whatsappUrl;
 
-      // Display total price
-      totalPriceElement.textContent = `Total Harga: RP${totalPrice.toLocaleString()}`;
-
-      // Show/hide cart based on cartItems length
-      const cart = document.querySelector('.cart');
-      if (cartItems.length > 0) {
-        cart.classList.remove('hide');
-      } else {
-        cart.classList.add('hide');
-      }
-    }
-
-    // Function to perform checkout
-    function checkout() {
-      const selectedPaymentMethods = document.querySelectorAll('input[name="paymentMethod"]:checked');
-      if (selectedPaymentMethods.length === 0) {
-        alert('Pilih setidaknya satu metode pembayaran.');
-        return;
-      }
-
-      const paymentMethods = Array.from(selectedPaymentMethods).map(input => input.value);
-      const totalPrice = calculateTotalPrice(cartItems);
-
-      // Perform the checkout process here
-      const paymentInfo = `Metode Pembayaran: ${paymentMethods.join(', ')}\nTotal Harga: RP${totalPrice.toLocaleString()}`;
-      alert(`Checkout berhasil!\n\n${paymentInfo}`);
-
-      // Clear cartItems and re-render
-      cartItems.length = 0;
-      renderCart();
-    }
-
-    // Fetch cart data and display on page load
-    window.addEventListener('DOMContentLoaded', () => {
-      fetchCartData();
-    });
-
-    // Rest of your JavaScript code
-  </script>
+                    this.cartItems.length = 0;
+                    this.renderCart();
+                }
+            },
+            created() {
+                console.log("DOM Loaded");
+                this.fetchProducts();
+                this.fetchCartData();
+                this.fetchLatestData();
+            }
+        });
+    </script>
 </body>
 
 </html>
